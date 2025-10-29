@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ברכת אהבה ליום הולדת 💖</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Comic Sans MS", "Arial", sans-serif;
+      text-align: center;
+      color: #222;
+      background: linear-gradient(45deg, #ffc0cb, #ffe6f2, #fff0f5);
+      background-size: 600% 600%;
+      animation: bgmove 10s infinite alternate;
+      overflow-x: hidden;
+    }
+
+    @keyframes bgmove {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+
+    .start-screen, .main-content, .guess-game, .final-blessing {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 1s ease;
+    }
+
+    .main-content, .guess-game, .final-blessing {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    h1 {
+      font-size: 3em;
+      color: #ff3399;
+      text-shadow: 2px 2px 0 #fff, 4px 4px 0 #ff66cc;
+      animation: wiggle 1s infinite alternate;
+    }
+
+    @keyframes wiggle {
+      0% { transform: rotate(-3deg); }
+      100% { transform: rotate(3deg); }
+    }
+
+    p {
+      font-size: 1.3em;
+      margin: 30px auto;
+      max-width: 600px;
+      line-height: 1.7;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+
+    .gif {
+      width: 160px;
+      margin: 10px;
+      border-radius: 15px;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-15px); }
+      100% { transform: translateY(0px); }
+    }
+
+    button {
+      background-color: #ff66b2;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 15px 40px;
+      font-size: 1.3em;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: transform 0.2s ease;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      transform: scale(1.1);
+      background-color: #ff3385;
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 0.9em;
+      color: #444;
+    }
+
+    .heart {
+      position: fixed;
+      font-size: 24px;
+      color: #ff4d94;
+      animation: floatHearts 6s linear infinite;
+      top: 100%;
+    }
+
+    @keyframes floatHearts {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-110vh) scale(1.5); opacity: 0; }
+    }
+
+    .guess-options {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 30px;
+    }
+
+    .guess-img {
+      width: 180px;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .guess-img:hover {
+      transform: scale(1.1);
+    }
+
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      top: -10px;
+      border-radius: 50%;
+      animation: fall 3s linear infinite;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- מסך פתיחה -->
+  <div class="start-screen" id="start">
+    <h1>🎁 הפתעה מחכה לך...</h1>
+    <p>לחצי על הכפתור רק אם את מוכנה להצפה של אהבה ולבבות 💌</p>
+    <button onclick="showBirthday()">יאללה, נלך על זה‫!‬!</button>
+  </div>
+
+  <!-- הברכה -->
+  <div class="main-content" id="main">
+    <h1>יום הולדת מלא אהבה 💖</h1>
+    <p>
+      הלב שלך מפיץ טוב, גם כשאת לא מנסה.<br>
+      מאחלת לך שנה של שלווה, רכות, רגעים מתוקים,<br>
+      והרבה אנשים שיאהבו אותך בדיוק כמו שאת. 🌸
+    </p>
+
+    <div>
+      <img class="gif" src="https://media.giphy.com/media/3o72FkiKGMGauydfyg/giphy.gif">
+      <img class="gif" src="https://media.giphy.com/media/l0MYEqEzwMWFCg8rm/giphy.gif">
+      <img class="gif" src="https://media.giphy.com/media/3o7TKP06rY4k2PzW8E/giphy.gif">
+    </div>
+
+    <button id="playButton" style="display:none;" onclick="startGame()">רוצה לשחק קצת? 🎲</button>
+
+    <footer>נכתב באהבה ‫,‬ מהדרי 😄</footer>
+  </div>
+
+  <!-- המשחק -->
+  <div class="guess-game" id="guess">
+    <h1>🎂 תנחשי מי חוגגת!</h1>
+    <p>בחרי מי לדעתך היא החוגגת האמיתית 👀</p>
+    <div class="guess-options">
+      <img class="guess-img" src="https://media.tenor.com/Pcew_ixoMc4AAAAM/britney-britney-spears.gif" onclick="checkGuess('wrong')">
+      <img class="guess-img" src="https://media.tenor.com/gOBbCdtPhjUAAAAM/uma-thurman-mia-wallace.gif" onclick="checkGuess('wrong')">
+      <img class="guess-img" src="https://media.tenor.com/yUI4c5PSaXUAAAAM/trvlyrare-azealia-banks.gif" onclick="checkGuess('right')">
+    </div>
+  </div>
+
+  <!-- שלב סיום -->
+  <div class="final-blessing" id="final">
+    <h1>💫 צדקת! החוגגת האמיתית היא אזאליה בנקס 🎉</h1>
+    <p>שתהיה שנה קסומה, מלאת אור, אנרגיה ושמחה אמיתית.<br>היקום חוגג איתך היום 🌈</p>
+  </div>
+
+  <!-- מוזיקה -->
+  <audio id="music1" loop>
+    <source src="SpotiDownloader.com - מזל טוב - David Simcha.mp3" type="audio/mpeg">
+  </audio>
+
+  <audio id="music2" loop>
+    <source src="SpotiDownloader.com - מזל טוב - David Simcha.mp3" type="audio/mpeg">
+  </audio>
+
+  <audio id="music3" loop>
+    <source src="SpotiDownloader.com - Along the Coast - Azealia Banks.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- צלילים -->
+  <audio id="fail-sound">
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_5c37e16cb6.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="win-sound">
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_73349b25b8.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    // לבבות
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.textContent = "💖";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (3 + Math.random() * 3) + "s";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 6000);
+    }
+    setInterval(createHeart, 300);
+
+    function showBirthday() {
+      document.getElementById("start").style.opacity = "0";
+      setTimeout(() => {
+        document.getElementById("start").style.display = "none";
+        const main = document.getElementById("main");
+        main.style.opacity = "1";
+        main.style.pointerEvents = "all";
+
+        const music1 = document.getElementById("music1");
+        music1.currentTime = 48; // מתחיל לנגן מ-0:48
+        music1.play();
+
+        // אחרי כמה שניות מופיע הכפתור למשחק
+        setTimeout(() => {
+          document.getElementById("playButton").style.display = "inline-block";
+        }, 7000); // אחרי 7 שניות
+      }, 1000);
+    }
+
+    function startGame() {
+      const music1 = document.getElementById("music1");
+      const music2 = document.getElementById("music2");
+      music1.pause();
+      music2.currentTime = 0;
+      music2.play();
+
+      document.getElementById("main").style.opacity = "0";
+      setTimeout(() => {
+        document.getElementById("main").style.display = "none";
+        const guess = document.getElementById("guess");
+        guess.style.opacity = "1";
+        guess.style.pointerEvents = "all";
+      }, 1000);
+    }
+
+    function checkGuess(result) {
+      const failSound = document.getElementById("fail-sound");
+      const winSound = document.getElementById("win-sound");
+      const music2 = document.getElementById("music2");
+      const music3 = document.getElementById("music3");
+
+      if (result === 'right') {
+        launchConfetti("success");
+        winSound.play();
+        music2.pause();
+        music3.currentTime = 19; // מתחיל לנגן מ-0:19
+        music3.play();
+
+        document.getElementById("guess").style.opacity = "0";
+        setTimeout(() => {
+          document.getElementById("guess").style.display = "none";
+          const final = document.getElementById("final");
+          final.style.opacity = "1";
+          final.style.pointerEvents = "all";
+        }, 1000);
+      } else {
+        failSound.play();
+        launchConfetti("fail");
+        alert("אוי לא 🤡 טעות! נסי שוב...");
+      }
+    }
+
+    function launchConfetti(type) {
+      for (let i = 0; i < 50; i++) {
+        const conf = document.createElement("div");
+        conf.classList.add("confetti");
+        conf.style.left = Math.random() * 100 + "vw";
+        conf.style.backgroundColor = type === "success" ? randomColor() : "#111";
+        conf.style.animationDuration = 2 + Math.random() * 3 + "s";
+        document.body.appendChild(conf);
+        setTimeout(() => conf.remove(), 3000);
+      }
+    }
+
+    function randomColor() {
+      const colors = ["#ff4d94", "#ffcc00", "#00ccff", "#66ff66", "#ff9966"];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+  </script>
+
+</body>
+</html>
