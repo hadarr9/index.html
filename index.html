@@ -140,8 +140,6 @@
       to {
         transform: translateY(100vh) rotate(720deg);
         opacity: 0;
-
-
       }
     }
   </style>
@@ -158,6 +156,10 @@
   <!-- הברכה -->
   <div class="main-content" id="main">
     <h1>יום הולדת מלא אהבה 💖</h1>
+
+    <!-- הוספתי את הכפתור כאן -->
+    <button onclick="startGame()">רוצה לשחק קצת? 🎲</button>
+
     <p>
       הלב שלך מפיץ טוב, גם כשאת לא מנסה.<br>
       מאחלת לך שנה של שלווה, רכות, רגעים מתוקים,<br>
@@ -169,8 +171,6 @@
       <img class="gif" src="https://media.giphy.com/media/l0MYEqEzwMWFCg8rm/giphy.gif">
       <img class="gif" src="https://media.giphy.com/media/3o7TKP06rY4k2PzW8E/giphy.gif">
     </div>
-
-    <button id="playButton" style="display:none;" onclick="startGame()">רוצה לשחק קצת? 🎲</button>
 
     <footer>נכתב באהבה ‫,‬ מהדרי 😄</footer>
   </div>
@@ -214,7 +214,6 @@
   </audio>
 
   <script>
-    // לבבות
     function createHeart() {
       const heart = document.createElement("div");
       heart.classList.add("heart");
@@ -235,13 +234,8 @@
         main.style.pointerEvents = "all";
 
         const music1 = document.getElementById("music1");
-        music1.currentTime = 48; // מתחיל לנגן מ-0:48
+        music1.currentTime = 48;
         music1.play();
-
-        // אחרי כמה שניות מופיע הכפתור למשחק
-        setTimeout(() => {
-          document.getElementById("playButton").style.display = "inline-block";
-        }, 7000); // אחרי 7 שניות
       }, 1000);
     }
 
@@ -271,7 +265,7 @@
         launchConfetti("success");
         winSound.play();
         music2.pause();
-        music3.currentTime = 19; // מתחיל לנגן מ-0:19
+        music3.currentTime = 19;
         music3.play();
 
         document.getElementById("guess").style.opacity = "0";
